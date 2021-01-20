@@ -12,7 +12,7 @@ source:
     - makefile.patch
 
 build:
-  number: 1000
+  number: 1001
   skip: True  # [win or osx]
 
 requirements:
@@ -25,7 +25,7 @@ test:
 
 about:
   home: https://packages.qa.debian.org/d/datefudge.html
-  license: GPL v2
+  license: GPLv2
   license_family: GPL
   license_file: COPYING
   summary: 'Fake the system date'
@@ -33,3 +33,4 @@ about:
 extra:
   recipe-maintainers:
     - scopatz
+    - xhochy
