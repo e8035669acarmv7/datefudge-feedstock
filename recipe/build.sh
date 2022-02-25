@@ -1,5 +1,5 @@
 #!/usr/bin/bash
 set -ex
 
-make install
+make install VERSION=${PKG_VERSION}
 make test

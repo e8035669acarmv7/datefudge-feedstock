@@ -1,8 +1,10 @@
 diff --git a/Makefile b/Makefile
-index 563e928..932d0e1 100644
+index 563e928..b35e6fa 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2,12 +2,13 @@ VERSION := $(shell dpkg-parsechangelog | sed -n 's/^Version: //p')
+@@ -1,13 +1,14 @@
+-VERSION := $(shell dpkg-parsechangelog | sed -n 's/^Version: //p')
++VERSION ?= $(shell dpkg-parsechangelog | sed -n 's/^Version: //p')
  
  CC      ?= gcc
  CFLAGS  += -Wall -Wextra -D_REENTRANT -fpic
