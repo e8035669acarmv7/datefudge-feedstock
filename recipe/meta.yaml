@@ -9,9 +9,9 @@ source:
   url: http://deb.debian.org/debian/pool/main/d/datefudge/datefudge_{{ version }}.tar.xz
   sha256: 6c754a6c4de4f934b782d08c1bfef1f0181d796d599f2ce826f74422eecaa8fa
   patches:
-    - makefile.patch
+    - 0001-Make-the-Makefile-portable.patch
     # https://salsa.debian.org/debian/datefudge/-/commit/508fc0f371a5b056c1b7c9379b3446eb60af774a
-    - reverse_glibc_2.31.patch
+    - 0002-Revert-glibc-2.31-patch.patch
 
 build:
   number: 0

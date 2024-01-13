@@ -1,0 +1,57 @@
+From 0e89b5d5f25a7243910ff33c6d31433000a91512 Mon Sep 17 00:00:00 2001
+From: Uwe Korn <uwelk@xhochy.com>
+Date: Sat, 13 Jan 2024 20:10:12 +0000
+Subject: [PATCH 1/2] Make the Makefile portable
+
+---
+ Makefile | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 6fb7f66..88bdcb8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,13 +1,14 @@
+-VERSION := $(shell dpkg-parsechangelog | sed -n 's/^Version: //p')
++VERSION ?= $(shell dpkg-parsechangelog | sed -n 's/^Version: //p')
+ 
+ CC      ?= gcc
+ CFLAGS  += -Wall -Wextra -D_REENTRANT -fpic # -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64
++PREFIX  ?= /usr
+ 
+ ifeq (,$(INSTALL_PROGRAM))
+ 	INSTALL_PROGRAM := "install"
+ endif
+ 
+-prefix	= /usr
++prefix	?= $(PREFIX)
+ libdir 	= $(prefix)/lib
+ ifneq (,$(libarch))
+ 	# The `*-*' pattern matches to both hurd-i386 and e.g. i386-linux-gnu
+@@ -19,12 +20,20 @@ mandir	= $(prefix)/share/man
+ all compile: datefudge datefudge.so datefudge.1
+ 
+ install: datefudge datefudge.so datefudge.1
+-	install -d $(DESTDIR)$(libdir)/$(libarch)/datefudge
+-	$(INSTALL_PROGRAM) -m 644 datefudge.so $(DESTDIR)$(libdir)/$(libarch)/datefudge/datefudge.so
+-	install -d $(DESTDIR)$(bindir)
+-	$(INSTALL_PROGRAM) -m 755 datefudge $(DESTDIR)$(bindir)
+-	install -d $(DESTDIR)$(mandir)/man1
+-	install -m 644 datefudge.1 $(DESTDIR)$(mandir)/man1
++	# copy the shared object
++	mkdir -p $(libdir)/datefudge
++	cp datefudge$(SHLIB_EXT) $(libdir)/datefudge/datefudge$(SHLIB_EXT)
++	chmod 644 $(libdir)/datefudge/datefudge$(SHLIB_EXT)
++
++	# copy the shell script
++	mkdir -p $(bindir)
++	cp datefudge $(bindir)/datefudge
++	chmod 755 $(bindir)/datefudge
++
++	# copy the man file
++	mkdir -p $(mandir)/man1
++	cp datefudge.1 $(mandir)/man1/datefudge.1
++	chmod 644 $(mandir)/man1/datefudge.1
+ 
+ format-sources:
+ 	clang-format --style=LLVM -i *.c
