@@ -1,0 +1,24 @@
+From b4bb0a57e1c591710723e802a219b6eb8334e58b Mon Sep 17 00:00:00 2001
+From: Uwe Korn <uwelk@xhochy.com>
+Date: Sat, 13 Jan 2024 20:12:33 +0000
+Subject: [PATCH 2/2] Revert glibc 2.31 patch
+
+---
+ datefudge.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/datefudge.c b/datefudge.c
+index 0e3ac0f..d10ee60 100644
+--- a/datefudge.c
++++ b/datefudge.c
+@@ -74,8 +74,8 @@ time_t time(time_t *tloc) {
+   return res;
+ }
+ 
+-int gettimeofday(struct timeval *tv, void *tz) {
+-  static int (*libc_gettimeofday)(struct timeval *, void *) = NULL;
++int gettimeofday(struct timeval *tv, struct timezone *tz) {
++  static int (*libc_gettimeofday)(struct timeval *, struct timezone *) = NULL;
+ 
+   if (!libc_gettimeofday)
+     libc_gettimeofday = (typeof(libc_gettimeofday))dlsym(RTLD_NEXT, __func__);
