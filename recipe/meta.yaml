@@ -1,5 +1,5 @@
 {% set name = "datefudge" %}
-{% set version = "1.25" %}
+{% set version = "1.26" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: http://deb.debian.org/debian/pool/main/d/datefudge/datefudge_{{ version }}.tar.xz
-  sha256: 6c754a6c4de4f934b782d08c1bfef1f0181d796d599f2ce826f74422eecaa8fa
+  sha256: 3f8a41760883ec13608850ad3a5374f441c7e66363eaaab5997cfe678e6e9225
   patches:
     - 0001-Make-the-Makefile-portable.patch
     # https://salsa.debian.org/debian/datefudge/-/commit/508fc0f371a5b056c1b7c9379b3446eb60af774a
